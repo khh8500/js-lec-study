@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>그림1</h1>
+    <h1>그림2</h1>
+    <h1>그림3</h1>
+    <div id="box">
+
+    </div>
+    <h1>그림4</h1>
+    <h1>그림5</h1>
+    <h1>그림6</h1>
+
+    <script>
+        async function download() {
+            let response = await fetch("http://localhost:8080/user");
+            let apiUtil = await response.json();
+            console.log(apiUtil);
+            $("#box").html(`유저네임 : ${apiUtil.body.username}`);
+        }
+        download();
+
+        alert("안녕");
+
+    </script>
+</body>
+
+</html>

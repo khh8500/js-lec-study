@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Document</title>
+    <style>
+        .container {
+            margin: 0 auto;
+            width: 80%;
+            border: 1px solid black;
+            padding: 20px;
+        }
+
+        .board-item {
+            border: 1px solid blue;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="box">
+
+    </div>
+
+
+    <script>
+        $.get("http://localhost:8080/board", (response) => {
+            let apiUtil = response;
+            console.log(apiUtil);
+
+            apiUtil.body.forEach(board => {
+                let design = `<div class="board-item" id="board-${board.id}">
+                                번호: ${board.id}, 제목: ${board.title}
+                                <button onclick="del(${board.id})">삭제</button>
+                              </div>`;
+                $("#box").append(design);
+            });
+        });
+
+        function del(boardId) {
+            $.ajax({
+                type: "delete",
+                url: `http://localhost:8080/board/${boardId}`
+            }).done((response) => {
+                console.log(response);
+                if (response.status != 200) {
+                    alert("삭제 실패");
+                } else {
+                    $(`#board-${boardId}`).remove();
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
